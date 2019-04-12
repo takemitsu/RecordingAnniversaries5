@@ -29,6 +29,6 @@ Route::prefix('api')->group(function () {
 
     Route::apiResources([
         'entities' => 'EntityController',
-        'days' => 'DaysController',
+        'entities.days' => 'DaysController',
     ]);
 });
