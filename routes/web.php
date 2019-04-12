@@ -22,3 +22,13 @@ Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('re
 Route::post('register', 'Auth\RegisterController@register');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// とりあえず web 側で api を定義
+Route::prefix('api')->group(function () {
+    Route::get('entities/pickup', 'EntityController@pickup');
+
+    Route::apiResources([
+        'entities' => 'EntityController',
+        'days' => 'DaysController',
+    ]);
+});
