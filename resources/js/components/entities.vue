@@ -14,7 +14,7 @@
                             <button type="button" class="btn btn-danger" @click="deleteEntity(entity)">削除</button>
                         </div>
                         <div class="btn-group btn-group-sm" role="group">
-                            <button type="button" class="btn btn-primary">記念日追加</button>
+                            <router-link :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: 'new'}}" class="btn btn-primary">記念日追加</router-link>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     <div class="col-md-3 anniv_diff">{{getAges(day.anniv_at)}}</div>
                     <div class="col-md-3 actions text-right">
                         <div class="btn-group btn-group-sm" role="group">
-                            <button type="button" class="btn btn-warning">編集</button>
+                            <router-link :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: day.id}}" class="btn btn-warning">編集</router-link>
                             <button type="button" class="btn btn-danger" @click="deleteAnniv(entity, day)">削除</button>
                         </div>
                     </div>

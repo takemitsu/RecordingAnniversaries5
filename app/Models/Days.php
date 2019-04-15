@@ -28,15 +28,16 @@ class Days extends Model
      */
     public function diff()
     {
-        if($this->anniv_at == null) {
+        if ($this->anniv_at == null) {
             return null;
         }
 
         $dt = Carbon::createFromFormat('Y-m-d', $this->anniv_at);
         $now = Carbon::now();
+        $now->setTime(0, 0, 0, 0);
 
         // 未来日か
-        if ($dt > $now) {
+        if ($dt >= $now) {
             return $dt->diffInDays();
         }
 
