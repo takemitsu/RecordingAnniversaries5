@@ -19,7 +19,20 @@
 
                     <div class="form-group">
                         <label for="anniv">記念日</label>
-                        <input type="text" class="form-control" id="anniv" v-model="form.anniv_at" placeholder="Enter anniv_at">
+                        <input type="text" class="form-control" id="anniv" v-model="form.anniv_at" placeholder="Enter anniversary date" @blur="changePickerAnnivAt">
+                        <small class="form-text text-muted">入力する場合はこちら</small>
+                        ({{jDate(form.anniv_at, true)}})
+                        <vuejs-datepicker
+                            id="anniv"
+                            :bootstrap-styling="datepickerOption.bootstrapStyling"
+                            v-model="anniv_at"
+                            :required="datepickerOption.required"
+                            name="datepicker"
+                            :language="datepickerOption.language"
+                            :disabled="datepickerOption.disabled"
+                            @selected="changeFormAnnivAt"
+                            :format="customFormatter"></vuejs-datepicker>
+                        <small class="form-text text-muted">選択する場合はこちら</small>
                     </div>
 
                     <div class="form-group">
@@ -27,6 +40,7 @@
                         <input type="text" class="form-control" id="desc" v-model="form.desc" placeholder="description">
                     </div>
                     <button type="button" class="btn btn-primary" @click="saveEntity()">Submit</button>
+                    <router-link :to="{name:'entities'}" class="btn btn-link">戻る</router-link>
                 </form>
             </div>
         </div>
@@ -34,10 +48,17 @@
 </template>
 <script>
     import mixinErrorProcess from '../util/ErrorProcess.js'
+    import vuejsDatepicker from 'vuejs-datepicker'
+    import {en, ja} from 'vuejs-datepicker/dist/locale'
+    import moment from 'moment'
+    import mixinJDate from '../util/jdate'
     export default {
         mixins: [
-            mixinErrorProcess
+            mixinErrorProcess, mixinJDate
         ],
+        components: {
+            vuejsDatepicker,
+        },
         data() {
             return {
                 entity_id: null,
@@ -47,6 +68,15 @@
                     anniv_at: null,
                     desc: null,
                 },
+                anniv_at: null,
+                datepickerOption: {
+                    format: 'yyyy-MM-dd',
+                    language: ja,
+                    bootstrapStyling: true,
+                    required: true,
+                    disabled: false,
+
+                }
             }
         },
         mounted() {
@@ -71,9 +101,12 @@
                 axios.get('/api/entities/' + encodeURIComponent(this.entity_id) + '/days/' + encodeURIComponent(this.anniv_id))
                     .then(result => {
                         this.form = result.data
+                        this.anniv_at = this.form.anniv_at
                     })
             },
             saveEntity() {
+                this.form.anniv_at = this.customFormatter(this.form.anniv_at)
+
                 this.initializeErrorMessage()
 
                 let url = '/api/entities/' + encodeURIComponent(this.entity_id) + '/days'
@@ -95,6 +128,15 @@
                         this.setErrorMessage(error)
                     })
             },
+            customFormatter(date) {
+                return moment(date).format('YYYY-MM-DD');
+            },
+            changePickerAnnivAt() {
+                this.anniv_at = this.form.anniv_at
+            },
+            changeFormAnnivAt(val) {
+                this.form.anniv_at = this.customFormatter(val)
+            }
         }
     }
 </script>
