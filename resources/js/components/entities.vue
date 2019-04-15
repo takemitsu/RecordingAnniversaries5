@@ -1,6 +1,5 @@
 <template>
     <section id="entities" class="container">
-        <h2>Entities</h2>
         <div class="card" v-for="(entity, entity_index) in entities">
             <div class="card-header">
                 <div class="row">
@@ -10,7 +9,7 @@
                     </div>
                     <div class="col-md-4 text-right">
                         <div class="btn-group btn-group-sm" role="group">
-                            <router-link :to="{name: 'entity-edit', params: {entity_id: entity.id}}" class="btn btn-warning">編集</router-link>
+                            <router-link :to="{name: 'entity-edit', params: {entity_id: entity.id}}" class="btn btn-warning">変更</router-link>
                             <button type="button" class="btn btn-danger" @click="deleteEntity(entity)">削除</button>
                         </div>
                         <div class="btn-group btn-group-sm" role="group">
@@ -30,7 +29,7 @@
                     <div class="col-md-3 anniv_diff">{{getAges(day.anniv_at)}}</div>
                     <div class="col-md-3 actions text-right">
                         <div class="btn-group btn-group-sm" role="group">
-                            <router-link :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: day.id}}" class="btn btn-warning">編集</router-link>
+                            <router-link :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: day.id}}" class="btn btn-warning">変更</router-link>
                             <button type="button" class="btn btn-danger" @click="deleteAnniv(entity, day)">削除</button>
                         </div>
                     </div>
@@ -109,6 +108,9 @@
         margin: 0;
         .name, .anniv_at, .anniv_diff, .actions, .desc {
             padding: 10px;
+        }
+        .desc {
+            padding-top: 0;
         }
     }
     .days:first-child {

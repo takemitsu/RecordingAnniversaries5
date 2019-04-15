@@ -2,7 +2,11 @@
     <section id="anniv_edit" class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h3>Entity</h3>
+                <h3>
+                    グループ
+                    <span v-if="entity_id">変更</span>
+                    <span v-else>追加</span>
+                </h3>
                 <div class="alert alert-danger" v-if="isErrorMessageTypeForm()" style="margin-bottom: 22px;">
                     <div>
                         <ul v-for="error in error_message" style="margin-bottom: 0;">
@@ -21,6 +25,7 @@
                         <input type="text" class="form-control" id="desc" v-model="entity.desc" placeholder="description">
                     </div>
                     <button type="button" class="btn btn-primary" @click="saveEntity()">Submit</button>
+                    <router-link :to="{name:'entities'}" class="btn btn-link">戻る</router-link>
                 </form>
             </div>
         </div>
