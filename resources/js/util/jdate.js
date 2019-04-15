@@ -38,7 +38,7 @@ export default {
                 return ''
             }
 
-            let year = dt.diff(moment(gengo.at),'years') + 1
+            let year = dt.year() - moment(gengo.at).year() + 1
             if (year === 1) {
                 year = '元'
             }
