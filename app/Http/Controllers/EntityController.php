@@ -40,10 +40,12 @@ class EntityController extends Controller
 
     public function index()
     {
+        // TODO: ページャは後から。。
         return Entity::where('user_id', auth()->user()->id)
             ->with('days')
             ->orderBy('created_at', 'asc')
-            ->paginate(20);
+            ->get();
+            //->paginate(20);
     }
 
 
