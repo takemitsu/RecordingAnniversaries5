@@ -86,9 +86,6 @@
         padding: 8px;
         border-top: 1px solid #ddd;
     }
-    .days:nth-child(even){
-        background-color: #f0fff0;
-    }
     .days:first-child {
         border-top: none;
     }
