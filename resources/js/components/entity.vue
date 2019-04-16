@@ -34,6 +34,7 @@
 <script>
     import mixinErrorProcess from '../util/ErrorProcess.js'
     export default {
+        name: 'entity',
         mixins: [
             mixinErrorProcess
         ],

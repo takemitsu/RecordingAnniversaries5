@@ -43,10 +43,12 @@
 <script>
     import mixinJDate from '../util/jdate'
     import moment from 'moment'
+    import mixinErrorProcess from '../util/ErrorProcess.js'
+
     export default {
-        name: 'pickup',
+        name: 'entities',
         mixins: [
-            mixinJDate,
+            mixinJDate, mixinErrorProcess,
         ],
         data() {
             return {
@@ -61,6 +63,9 @@
                 axios.get('api/entities')
                     .then(result => {
                         this.entities = result.data
+                    })
+                    .catch(error => {
+                        this.setErrorMessage(error)
                     })
             },
             getAges(value) {

@@ -57,6 +57,7 @@
     import moment from 'moment'
     import mixinJDate from '../util/jdate'
     export default {
+        name: 'anniversary',
         mixins: [
             mixinErrorProcess, mixinJDate
         ],
