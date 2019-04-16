@@ -56,6 +56,12 @@ $ php artisan key:generate
 $ php artisan migrate
 ```
 
+### [ディレクトリパーミッション](https://readouble.com/laravel/5.8/ja/installation.html#configuration)
+
+> Laravelをインストールした後に、多少のパーミッションの設定が必要です。storage下とbootstrap/cacheディレクトリをWebサーバから書き込み可能にしてください。設定しないとLaravelは正しく実行されません。
+
+他 [設定](https://readouble.com/laravel/5.8/ja/installation.html#configuration) などを参照。
+
 ## 動作確認
 
 ```bash
