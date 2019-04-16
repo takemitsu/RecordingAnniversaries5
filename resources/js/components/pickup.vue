@@ -57,10 +57,12 @@
                 if (!dt.isValid()) {
                     return ''
                 }
-                let diff_year = moment().diff(value, 'years')
-                if (diff_year < 0) {
-                    return Math.abs(diff_year) + '年以上後'
+                // 未来日なら表示しない
+                if (moment().diff(value, 'days') < 0) {
+                    return ''
                 }
+
+                let diff_year = moment().diff(value, 'years')
                 return diff_year + '年(' + (diff_year + 1) + '年目)'
             }
         }
