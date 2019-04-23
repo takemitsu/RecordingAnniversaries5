@@ -5,7 +5,7 @@
 
             <div class="card-body entity" :class="{'entity-first': (entity_index === 0)}" v-for="(entity, entity_index) in pickup">
                 <div class="row">
-                    <div class="col-md-2">{{entity.name}}</div>
+                    <div class="col-md-2 entity-name">{{entity.name}}</div>
                     <div class="col-md-10 days-wrapper">
                         <div class="row days" v-for="(day,index) in entity.days">
                             <div class="col-md-4">
@@ -71,11 +71,24 @@
 
 <style lang="scss" scoped>
 
+    .card-body {
+        padding: 10px;
+    }
+
     .entity {
-        border-top: 1px solid #ddd;
+        border-top: 2px solid #ddd;
+
+        .row {
+            margin: 0;
+        }
     }
     .entity-first {
         border-top: none;
+    }
+
+    .entity-name {
+        font-weight: bold;
+        padding: 0;
     }
 
     .days-wrapper {
@@ -84,7 +97,7 @@
     .days {
         margin: 0;
         padding: 8px;
-        border-top: 1px solid #ddd;
+        border-top: 1px dashed #ddd;
     }
     .days:first-child {
         border-top: none;
