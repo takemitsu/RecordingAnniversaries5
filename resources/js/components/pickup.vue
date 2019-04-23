@@ -69,37 +69,33 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="stylus" scoped>
 
-    .card-body {
-        padding: 10px;
-    }
+    .card-body
+        padding: 10px
 
-    .entity {
-        border-top: 2px solid #ddd;
+    .entity
+        border-top: 2px solid #ddd
 
-        .row {
-            margin: 0;
-        }
-    }
-    .entity-first {
-        border-top: none;
-    }
+        .row
+            margin: 0
 
-    .entity-name {
-        font-weight: bold;
-        padding: 0;
-    }
+    .entity-first
+        border-top: none
 
-    .days-wrapper {
-        padding: 0;
-    }
-    .days {
-        margin: 0;
-        padding: 8px;
-        border-top: 1px dashed #ddd;
-    }
-    .days:first-child {
-        border-top: none;
-    }
+    .entity-name
+        font-weight: bold
+        padding: 0
+
+    .days-wrapper
+        padding: 0
+
+    .days
+        margin: 0
+        padding: 8px
+        border-top: 1px dashed #ddd
+
+    .days:first-child
+        border-top: none
+
 </style>

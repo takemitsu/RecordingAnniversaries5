@@ -103,24 +103,24 @@
         }
     }
 </script>
-<style lang="scss" scoped>
-    .card {
-        margin-bottom: 20px;
-    }
-    .card-body {
-        padding: 0;
-    }
-    .days {
-        border-top: solid 1px #ddd;
-        margin: 0;
-        .name, .anniv_at, .anniv_diff, .actions, .desc {
-            padding: 10px;
-        }
-        .desc {
-            padding-top: 0;
-        }
-    }
-    .days:first-child {
+<style lang="stylus" scoped>
+    .card
+        margin-bottom: 20px
+
+    .card-body
+        padding: 0
+
+    .days
+        border-top: solid 1px #ddd
+        margin: 0
+
+        .name, .anniv_at, .anniv_diff, .actions, .desc
+            padding: 10px
+
+        .desc
+            padding-top: 0
+
+    .days:first-child
         border-top: none;
-    }
+
 </style>
