@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar app>
+    <v-toolbar flat>
       <v-toolbar-title>ra</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
@@ -8,6 +8,8 @@
         <v-btn flat href="register">Register</v-btn>
       </v-toolbar-items>
     </v-toolbar>
+
+    <v-divider></v-divider>
 
     <v-content>
       <v-container grid-list>

@@ -16,7 +16,7 @@
             ></v-text-field>
 
             <v-text-field
-                prepend-icon="person"
+                prepend-icon="email"
                 v-model="email"
                 label="E-mail"
                 required
@@ -40,8 +40,8 @@
                 type="password"
             ></v-text-field>
 
-            <v-btn flat type="submit" color="primary">Register</v-btn>
-            <v-btn flat @click="clear">clear</v-btn>
+            <v-btn outline type="submit" color="primary">Register</v-btn>
+            <v-btn outline @click="clear">clear</v-btn>
           </v-form>
 
           <v-alert :value="true" type="warning" outline>

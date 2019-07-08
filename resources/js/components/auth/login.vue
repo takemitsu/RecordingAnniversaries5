@@ -8,7 +8,7 @@
           <v-form method="post" action="login">
 
             <v-text-field
-                prepend-icon="person"
+                prepend-icon="email"
                 v-model="email"
                 label="E-mail"
                 required
@@ -24,8 +24,8 @@
                 type="password"
             ></v-text-field>
 
-            <v-btn flat type="submit" color="primary">LOGIN</v-btn>
-            <v-btn flat @click="clear">clear</v-btn>
+            <v-btn outline type="submit" color="primary">LOGIN</v-btn>
+            <v-btn outline @click="clear">clear</v-btn>
           </v-form>
         </v-card-text>
       </v-card>
