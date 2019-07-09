@@ -37,14 +37,14 @@
     export default {
 
         data: () => ({
-            email: 'takemitsu@notespace.jp',
-            password: 'suzuki83',
+            email: '',
+            password: '',
         }),
 
         methods: {
             clear() {
-                this.email = 'takemitsu@notespace.jp'
-                this.password = 'suzuki83'
+                this.email = ''
+                this.password = ''
             }
         }
     }

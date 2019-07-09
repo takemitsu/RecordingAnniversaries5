@@ -65,10 +65,10 @@
 
         methods: {
             clear() {
-                this.name = 'takemitsu'
-                this.email = 'takemitsu@notespace.jp'
-                this.password = 'suzuki83'
-                this.password_confirm = 'suzuki83'
+                this.name = ''
+                this.email = ''
+                this.password = ''
+                this.password_confirm = ''
             }
         }
     }
