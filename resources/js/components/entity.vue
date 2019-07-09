@@ -1,38 +1,43 @@
 <template>
-    <section id="anniv_edit" class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h3>
-                    グループ
-                    <span v-if="entity_id">変更</span>
-                    <span v-else>追加</span>
-                </h3>
-                <div class="alert alert-danger" v-if="isErrorMessageTypeForm()" style="margin-bottom: 22px;">
-                    <div>
-                        <ul v-for="error in error_message" style="margin-bottom: 0;">
-                            <li v-for="e in error">{{e}}</li>
-                        </ul>
-                    </div>
-                </div>
+  <v-layout row wrap>
+    <v-flex xs12 sm8 md6 offset-md3 offset-sm2>
+      <v-card>
+        <v-card-title class="title">
+          グループ
+          <span v-if="entity_id">変更</span>
+          <span v-else>追加</span>
+        </v-card-title>
+        <v-card-text>
 
-                <form>
-                    <div class="form-group">
-                        <label for="name">名前</label>
-                        <input type="text" class="form-control" id="name" v-model="entity.name" placeholder="Enter name">
-                    </div>
-                    <div class="form-group">
-                        <label for="desc">説明</label>
-                        <input type="text" class="form-control" id="desc" v-model="entity.desc" placeholder="description">
-                    </div>
-                    <button type="button" class="btn btn-primary" @click="saveEntity()">Submit</button>
-                    <router-link :to="{name:'entities'}" class="btn btn-link">戻る</router-link>
-                </form>
-            </div>
-        </div>
-    </section>
+          <div v-if="isErrorMessageTypeForm()">
+            <v-alert v-for="(error, error_index) in error_message" :key="error_index" :value="true" type="error" outline>
+              <div v-for="e in error">{{e}}</div>
+            </v-alert>
+          </div>
+
+          <v-form>
+            <v-text-field
+                v-model="entity.name"
+                label="名前"
+                required
+            ></v-text-field>
+
+            <v-textarea
+                v-model="entity.desc"
+                label="説明"
+            ></v-textarea>
+
+            <v-btn outline color="primary" @click="saveEntity">登録</v-btn>
+            <v-btn outline :to="{name:'entities'}">戻る</v-btn>
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 <script>
     import mixinErrorProcess from '../util/ErrorProcess.js'
+
     export default {
         name: 'entity',
         mixins: [
@@ -76,7 +81,7 @@
                     data: this.entity
                 })
                     .then(res => {
-                        this.$router.push({name:'entities'})
+                        this.$router.push({name: 'entities'})
                     })
                     .catch(error => {
                         this.setErrorMessage(error)

@@ -7,7 +7,7 @@
           <v-card-title primary-title class="pt-3 pb-3 grey lighten-4">
             <div>
               <h3>{{entity.name}}</h3>
-              <div v-if="entity.desc" class="caption">{{entity.desc}}</div>
+              <div v-if="entity.desc && isDesc" class="caption desc">{{entity.desc}}</div>
             </div>
           </v-card-title>
           <v-divider></v-divider>
@@ -21,9 +21,7 @@
                   <span class="pink--text font-weight-bold">{{day.diff_days}}</span>
                   日
                 </div>
-                <div v-if="day.desc" class="caption">
-                  {{day.desc}}
-                </div>
+                <div v-if="day.desc && isDesc" class="caption desc">{{day.desc}}</div>
                 <div class="mt-2">
                   <span>{{day.anniv_at}} ({{jDate(day.anniv_at, true)}})</span>
                   <span class="ml-4">{{getAges(day.anniv_at)}}</span>
@@ -37,6 +35,7 @@
         </template>
       </v-card>
 
+      <v-btn outline @click="isDesc = !isDesc">説明を表示</v-btn>
     </v-flex>
   </v-layout>
 </template>
@@ -53,6 +52,7 @@
         data() {
             return {
                 pickup: [],
+                isDesc: false,
             }
         },
         mounted() {
@@ -87,3 +87,8 @@
         }
     }
 </script>
+
+<style lang="stylus" scoped>
+  .desc
+    white-space pre-wrap
+</style >

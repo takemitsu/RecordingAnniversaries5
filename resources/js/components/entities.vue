@@ -6,7 +6,7 @@
         <v-card-title primary-title class="pt-3 pb-0 grey lighten-4">
           <div>
             <h3>{{entity.name}}</h3>
-            <div v-if="entity.desc" class="caption">{{entity.desc}}</div>
+            <div v-if="entity.desc" class="caption desc">{{entity.desc}}</div>
           </div>
         </v-card-title>
 
@@ -40,9 +40,7 @@
                 <span class="pink--text font-weight-bold">{{day.diff_days}}</span>
                 日
               </div>
-              <div v-if="day.desc" class="caption">
-                {{day.desc}}
-              </div>
+              <div v-if="day.desc" class="caption desc">{{day.desc}}</div>
               <div class="mt-2">
                 <span>{{day.anniv_at}} ({{jDate(day.anniv_at, true)}})</span>
                 <span class="ml-4">{{getAges(day.anniv_at)}}</span>
@@ -139,3 +137,8 @@
         }
     }
 </script>
+
+<style lang="stylus" scoped>
+  .desc
+    white-space pre-wrap
+</style >

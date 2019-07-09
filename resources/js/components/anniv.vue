@@ -1,54 +1,57 @@
 <template>
-    <section id="anniv_edit" class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h3>
-                    記念日
-                    <span v-if="anniv_id">変更</span>
-                    <span v-else>追加</span>
-                </h3>
-                <div class="alert alert-danger" v-if="isErrorMessageTypeForm()" style="margin-bottom: 22px;">
-                    <div>
-                        <ul v-for="error in error_message" style="margin-bottom: 0;">
-                            <li v-for="e in error">{{e}}</li>
-                        </ul>
-                    </div>
-                </div>
 
-                <form>
-                    <div class="form-group">
-                        <label for="name">名前</label>
-                        <input type="text" class="form-control" id="name" v-model="form.name" placeholder="Enter name">
-                    </div>
+  <v-layout row wrap>
+    <v-flex xs12 sm8 md6 offset-md3 offset-sm2>
+      <v-card>
+        <v-card-title class="title">
+          記念日
+          <span v-if="anniv_id">変更</span>
+          <span v-else>追加</span>
+        </v-card-title>
+        <v-card-text>
 
-                    <div class="form-group">
-                        <label for="anniv">記念日</label>
-                        <input type="text" class="form-control" id="anniv" v-model="form.anniv_at" placeholder="Enter anniversary date" @blur="changePickerAnnivAt">
-                        <small class="form-text text-muted">入力する場合はこちら</small>
-                        ({{jDate(form.anniv_at, true)}})
-                        <vuejs-datepicker
-                            id="anniv"
-                            :bootstrap-styling="datepickerOption.bootstrapStyling"
-                            v-model="anniv_at"
-                            :required="datepickerOption.required"
-                            name="datepicker"
-                            :language="datepickerOption.language"
-                            :disabled="datepickerOption.disabled"
-                            @selected="changeFormAnnivAt"
-                            :format="customFormatter"></vuejs-datepicker>
-                        <small class="form-text text-muted">選択する場合はこちら</small>
-                    </div>
+          <div v-if="isErrorMessageTypeForm()">
+            <v-alert v-for="(error, error_index) in error_message" :key="error_index" :value="true" type="error"
+                     outline>
+              <div v-for="e in error">{{e}}</div>
+            </v-alert>
+          </div>
 
-                    <div class="form-group">
-                        <label for="desc">説明</label>
-                        <input type="text" class="form-control" id="desc" v-model="form.desc" placeholder="description">
-                    </div>
-                    <button type="button" class="btn btn-primary" @click="saveEntity()">Submit</button>
-                    <router-link :to="{name:'entities'}" class="btn btn-link">戻る</router-link>
-                </form>
-            </div>
-        </div>
-    </section>
+          <v-form>
+            <v-text-field
+                v-model="form.name"
+                label="名前"
+                required
+            ></v-text-field>
+
+            <v-text-field
+                v-model="form.anniv_at"
+                label="記念日"
+                required
+                :suffix="jDate(form.anniv_at, true)"
+            ></v-text-field>
+
+            <p>記念日は、下の日付を選択するか上のフィールドを入力してください</p>
+
+            <v-date-picker
+                v-model="form.anniv_at"
+                locale="jp-ja"
+                full-width
+                :day-format="date => new Date(date).getDate()"
+            ></v-date-picker>
+
+            <v-textarea
+                v-model="form.desc"
+                label="説明"
+            ></v-textarea>
+
+            <v-btn outline color="primary" @click="saveEntity">登録</v-btn>
+            <v-btn outline :to="{name:'entities'}">戻る</v-btn>
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 <script>
     import mixinErrorProcess from '../util/ErrorProcess.js'
@@ -56,6 +59,7 @@
     import {en, ja} from 'vuejs-datepicker/dist/locale'
     import moment from 'moment'
     import mixinJDate from '../util/jdate'
+
     export default {
         name: 'anniversary',
         mixins: [
@@ -86,18 +90,18 @@
         },
         mounted() {
             if (!this.$route.params.entity_id || !this.$route.params.anniv_id) {
-                this.router.push({name:'entities'})
+                this.router.push({name: 'entities'})
             }
             this.entity_id = this.$route.params.entity_id
-            if(parseInt(this.entity_id, 10) === 0) {
-                this.router.push({name:'entities'})
+            if (parseInt(this.entity_id, 10) === 0) {
+                this.router.push({name: 'entities'})
             }
             if (this.$route.params.anniv_id === 'new') {
                 return
             }
             this.anniv_id = this.$route.params.anniv_id
-            if(parseInt(this.anniv_id, 10) === 0) {
-                this.router.push({name:'entities'})
+            if (parseInt(this.anniv_id, 10) === 0) {
+                this.router.push({name: 'entities'})
             }
             this.getAnniv()
         },
@@ -127,7 +131,7 @@
                     data: this.form
                 })
                     .then(res => {
-                        this.$router.push({name:'entities'})
+                        this.$router.push({name: 'entities'})
                     })
                     .catch(error => {
                         this.setErrorMessage(error)
