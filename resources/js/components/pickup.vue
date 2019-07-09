@@ -1,25 +1,44 @@
 <template>
-    <section id="pickup" class="container">
-        <div class="card">
-            <div class="card-header">Pickup Information</div>
+  <v-layout row>
+    <v-flex xs12 sm8 md6 offset-md3 offset-sm2>
 
-            <div class="card-body entity" :class="{'entity-first': (entity_index === 0)}" v-for="(entity, entity_index) in pickup">
-                <div class="row">
-                    <div class="col-md-2 entity-name">{{entity.name}}</div>
-                    <div class="col-md-10 days-wrapper">
-                        <div class="row days" v-for="(day,index) in entity.days">
-                            <div class="col-md-4">
-                                <span class="text-primary">{{day.name}}</span> まで
-                                <span class="text-danger">{{day.diff_days}}</span> 日
-                            </div>
-                            <div class="col-md-4">{{day.anniv_at}} ({{jDate(day.anniv_at, true)}})</div>
-                            <div class="col-md-4">{{getAges(day.anniv_at)}}</div>
-                        </div>
-                    </div>
-                </div>
+      <v-card class="mb-3">
+        <template v-for="(entity, index) in pickup">
+          <v-card-title primary-title class="pt-3 pb-3 grey lighten-4">
+            <div>
+              <h3>{{entity.name}}</h3>
+              <div v-if="entity.desc" class="caption">{{entity.desc}}</div>
             </div>
-        </div>
-    </section>
+          </v-card-title>
+          <v-divider></v-divider>
+
+          <template v-for="(day, day_index) in entity.days">
+            <v-card-text>
+              <div>
+                <div>
+                  <span class="blue--text font-weight-bold">{{day.name}}</span>
+                  まで
+                  <span class="pink--text font-weight-bold">{{day.diff_days}}</span>
+                  日
+                </div>
+                <div v-if="day.desc" class="caption">
+                  {{day.desc}}
+                </div>
+                <div class="mt-2">
+                  <span>{{day.anniv_at}} ({{jDate(day.anniv_at, true)}})</span>
+                  <span class="ml-4">{{getAges(day.anniv_at)}}</span>
+                </div>
+              </div>
+            </v-card-text>
+            <v-divider v-if="day_index + 1 < entity.days.length"></v-divider>
+          </template>
+
+          <v-divider v-if="index + 1 < pickup.length" :key="index"></v-divider>
+        </template>
+      </v-card>
+
+    </v-flex>
+  </v-layout>
 </template>
 <script>
     import mixinJDate from '../util/jdate'
@@ -68,34 +87,3 @@
         }
     }
 </script>
-
-<style lang="stylus" scoped>
-
-    .card-body
-        padding: 10px
-
-    .entity
-        border-top: 2px solid #ddd
-
-        .row
-            margin: 0
-
-    .entity-first
-        border-top: none
-
-    .entity-name
-        font-weight: bold
-        padding: 0
-
-    .days-wrapper
-        padding: 0
-
-    .days
-        margin: 0
-        padding: 8px
-        border-top: 1px dashed #ddd
-
-    .days:first-child
-        border-top: none
-
-</style>

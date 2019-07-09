@@ -17,6 +17,7 @@
       </v-container>
     </v-content>
 
+    <v-divider></v-divider>
     <v-footer class="pa-3">
       <v-spacer></v-spacer>
       <div>&copy;{{new Date().getFullYear()}} takemitsu.</div>
