@@ -1,45 +1,92 @@
 <template>
-    <section id="entities" class="container">
-        <div class="card" v-for="(entity, entity_index) in entities">
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h4>{{entity.name}}</h4>
-                        <div class="small">{{entity.desc}}</div>
-                    </div>
-                    <div class="col-md-4 text-right">
-                        <div class="btn-group btn-group-sm" role="group">
-                            <router-link :to="{name: 'entity-edit', params: {entity_id: entity.id}}" class="btn btn-warning">変更</router-link>
-                            <button type="button" class="btn btn-danger" @click="deleteEntity(entity)">削除</button>
-                        </div>
-                        <div class="btn-group btn-group-sm" role="group">
-                            <router-link :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: 'new'}}" class="btn btn-primary">記念日追加</router-link>
-                        </div>
-                    </div>
-                </div>
+    <v-layout row wrap>
+        <v-flex xs12 sm8 md6 offset-md3 offset-sm2>
+
+            <div class="mb-3">
+                <v-btn :to="{name: 'entity-edit', params: {entity_id: 'new'}}" outline color="primary">
+                    <v-icon>add_circle_outline</v-icon>
+                    グループ追加
+                </v-btn>
+                <v-btn outline color="warning" @click="isEdit = !isEdit">
+                    <v-icon>edit</v-icon>
+                    編集モード<span v-show="isEdit">解除</span>
+                </v-btn>
             </div>
 
-            <div class="card-body">
-                <div class="row days" v-for="(day,index) in entity.days">
-                    <div class="col-md-3 name">
-                        <span class="text-primary">{{day.name}}</span> まで
-                        <span class="text-danger">{{day.diff_days}}</span> 日
+            <v-card v-for="(entity, entity_index) in entities" :key="entity.id" class="mb-3">
+                <v-card-title primary-title class="pt-3 pb-3 grey lighten-4">
+                    <div>
+                        <h3>{{entity.name}}</h3>
+                        <div v-if="entity.desc" class="caption">{{entity.desc}}</div>
                     </div>
-                    <div class="col-md-3 anniv_at">{{day.anniv_at}} ({{jDate(day.anniv_at, true)}})</div>
-                    <div class="col-md-3 anniv_diff">{{getAges(day.anniv_at)}}</div>
-                    <div class="col-md-3 actions text-right">
-                        <div class="btn-group btn-group-sm" role="group">
-                            <router-link :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: day.id}}" class="btn btn-warning">変更</router-link>
-                            <button type="button" class="btn btn-danger" @click="deleteAnniv(entity, day)">削除</button>
+                </v-card-title>
+
+                <v-card-actions v-show="isEdit">
+                    <v-btn outline small color="warning" :to="{name: 'entity-edit', params: {entity_id: entity.id}}">
+                        <v-icon>edit</v-icon>
+                        変更
+                    </v-btn>
+                    <v-btn outline small color="error" @click="deleteEntity(entity)">
+                        <v-icon>remove_circle_outline</v-icon>
+                        削除
+                    </v-btn>
+                    <v-btn outline small color="primary"
+                           :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: 'new'}}">
+                        <v-icon>add_circle_outline</v-icon>
+                        記念日追加
+                    </v-btn>
+                </v-card-actions>
+
+                <v-divider></v-divider>
+
+                <template v-for="(day, day_index) in entity.days">
+                    <v-card-text :class="{'pb-0': isEdit}">
+                        <div>
+                            <div>
+                                <span class="blue--text font-weight-bold">{{day.name}}</span>
+                                まで
+                                <span class="pink--text font-weight-bold">{{day.diff_days}}</span>
+                                日
+                            </div>
+                            <div v-if="day.desc" class="caption">
+                                {{day.desc}}
+                            </div>
+                            <div class="mt-2">
+                                <span>{{day.anniv_at}} ({{jDate(day.anniv_at, true)}})</span>
+                                <span class="ml-4">{{getAges(day.anniv_at)}}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-12 desc" v-if="day.desc">{{day.desc}}</div>
-                </div>
-            </div>
-        </div>
-        <router-link :to="{name: 'entity-edit', params: {entity_id: 'new'}}" class="btn btn-primary">グループ追加</router-link>
-    </section>
+                    </v-card-text>
+
+                    <v-card-actions v-show="isEdit">
+                        <v-btn
+                            small outline
+                            :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: day.id}}"
+                            color="warning">
+                            <v-icon>edit</v-icon>
+                            変更
+                        </v-btn>
+                        <v-btn small outline color="error" @click="deleteAnniv(entity, day)">
+                            <v-icon>remove_circle_outline</v-icon>
+                            削除
+                        </v-btn>
+                    </v-card-actions>
+
+                    <v-divider v-if="day_index + 1 < entity.days.length"></v-divider>
+                </template>
+            </v-card>
+            <v-btn :to="{name: 'entity-edit', params: {entity_id: 'new'}}" outline color="primary">
+                <v-icon>add_circle_outline</v-icon>
+                グループ追加
+            </v-btn>
+            <v-btn outline color="warning" @click="isEdit = !isEdit">
+                <v-icon>edit</v-icon>
+                編集モード<span v-show="isEdit">解除</span>
+            </v-btn>
+        </v-flex>
+    </v-layout>
 </template>
+
 <script>
     import mixinJDate from '../util/jdate'
     import moment from 'moment'
@@ -53,6 +100,7 @@
         data() {
             return {
                 entities: [],
+                isEdit: false,
             }
         },
         mounted() {
@@ -103,24 +151,3 @@
         }
     }
 </script>
-<style lang="stylus" scoped>
-    .card
-        margin-bottom: 20px
-
-    .card-body
-        padding: 0
-
-    .days
-        border-top: solid 1px #ddd
-        margin: 0
-
-        .name, .anniv_at, .anniv_diff, .actions, .desc
-            padding: 10px
-
-        .desc
-            padding-top: 0
-
-    .days:first-child
-        border-top: none;
-
-</style>
