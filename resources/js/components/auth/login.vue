@@ -24,6 +24,8 @@
                 type="password"
             ></v-text-field>
 
+            <v-checkbox v-model="remember" label="Remember Me" name="remember" value="1"></v-checkbox>
+
             <v-btn outline type="submit" color="primary">LOGIN</v-btn>
             <v-btn outline @click="clear">clear</v-btn>
           </v-form>
@@ -39,12 +41,14 @@
         data: () => ({
             email: '',
             password: '',
+            remember: false,
         }),
 
         methods: {
             clear() {
                 this.email = ''
                 this.password = ''
+                this.remember = false
             }
         }
     }
