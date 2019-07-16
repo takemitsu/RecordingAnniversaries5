@@ -88,7 +88,9 @@
                         this.setErrorMessage(error)
                     })
                     .finally(()=> {
-                        this.isShowDialog = false
+                        setTimeout(() => {
+                            this.isShowDialog = false
+                        }, 500)
                     })
             },
             getAges(value) {
