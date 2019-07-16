@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": [
+      "esnext",
+      "esnext.asynciterable",
+      "dom"
+    ],
+    "allowJs": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "strict": true,
+    // "noImplicitAny": true,
+    // "noImplicitReturns": true,
+    // "noEmit": true,
+
+    "outDir": "./built/",
+    "emitDecoratorMetadata": true
+  },
+  "include": [
+    "resources/ts/**/*"
+  ]
+}
