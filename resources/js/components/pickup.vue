@@ -35,7 +35,7 @@
         </template>
       </v-card>
 
-      <v-btn v-show="pickup.length > 0" outline @click="isDesc = !isDesc">説明を表示</v-btn>
+      <v-btn v-show="pickup.length > 0" outline @click="isDesc = !isDesc">説明を<span v-show="isDesc">非</span>表示</v-btn>
 
 
       <v-alert v-show="pickup.length === 0" :value="true" outline type="error">
@@ -44,6 +44,16 @@
 
         <v-btn outline :to="{name: 'entities'}">データ登録ページに移動する</v-btn>
       </v-alert>
+
+      <v-dialog v-model="isShowDialog" persistent dark>
+        <v-card color="primary" dark>
+          <v-card-text>
+            Please wait ..
+            <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+
     </v-flex>
   </v-layout>
 </template>
@@ -61,6 +71,7 @@
             return {
                 pickup: [],
                 isDesc: false,
+                isShowDialog: true
             }
         },
         mounted() {
@@ -68,12 +79,16 @@
         },
         methods: {
             getPickup() {
+                this.isShowDialog = true
                 axios.get('api/entities/pickup')
                     .then(result => {
                         this.pickup = result.data
                     })
                     .catch(error => {
                         this.setErrorMessage(error)
+                    })
+                    .finally(()=> {
+                        this.isShowDialog = false
                     })
             },
             getAges(value) {
