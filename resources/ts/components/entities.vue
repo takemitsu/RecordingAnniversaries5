@@ -13,15 +13,15 @@
         <div class="grey lighten-4">
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn outline small color="warning" :to="{name: 'entity-edit', params: {entity_id: entity.id}}">
+            <v-btn outlined small color="warning" :to="{name: 'entity-edit', params: {entity_id: entity.id}}">
               <v-icon>edit</v-icon>
               変更
             </v-btn>
-            <v-btn outline small color="error" @click="deleteEntity(entity)">
+            <v-btn outlined small color="error" @click="deleteEntity(entity)">
               <v-icon>remove_circle_outline</v-icon>
               削除
             </v-btn>
-            <v-btn outline small color="primary"
+            <v-btn outlined small color="primary"
                    :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: 'new'}}">
               <v-icon>add_circle_outline</v-icon>
               記念日追加
@@ -51,13 +51,13 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn
-                small outline
+                small outlined
                 :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: day.id}}"
                 color="warning">
               <v-icon>edit</v-icon>
               変更
             </v-btn>
-            <v-btn small outline color="error" @click="deleteAnniv(entity, day)">
+            <v-btn small outlined color="error" @click="deleteAnniv(entity, day)">
               <v-icon>remove_circle_outline</v-icon>
               削除
             </v-btn>
@@ -66,7 +66,7 @@
           <v-divider v-if="day_index + 1 < entity.days.length"></v-divider>
         </template>
       </v-card>
-      <v-btn :to="{name: 'entity-edit', params: {entity_id: 'new'}}" outline color="primary">
+      <v-btn :to="{name: 'entity-edit', params: {entity_id: 'new'}}" outlined color="primary">
         <v-icon>add_circle_outline</v-icon>
         グループ追加
       </v-btn>
@@ -74,67 +74,73 @@
   </v-layout>
 </template>
 
-<script>
-    import mixinJDate from '../util/jdate'
+<script lang="ts">
+    import {Component, Mixins} from 'vue-mixin-decorator'
     import moment from 'moment'
-    import mixinErrorProcess from '../util/ErrorProcess.js'
+    import axios from 'axios'
 
-    export default {
-        name: 'entities',
-        mixins: [
-            mixinJDate, mixinErrorProcess,
-        ],
-        data() {
-            return {
-                entities: [],
-            }
-        },
+    import '../models'
+
+    import ErrorProcess from "../util/ErrorProcess"
+    import jDate from '../util/jdate'
+
+    interface IMixinInterface extends ErrorProcess, jDate {
+    }
+
+    @Component
+    export default class EntitiesComponent extends Mixins<IMixinInterface>(ErrorProcess, jDate) {
+
+        entities: Array<Object> = []
+
         mounted() {
             this.getEntities()
-        },
-        methods: {
-            getEntities() {
-                axios.get('api/entities')
-                    .then(result => {
-                        this.entities = result.data
-                    })
-                    .catch(error => {
-                        this.setErrorMessage(error)
-                    })
-            },
-            getAges(value) {
-                if ((!value) || value.length != 10) {
-                    return ''
-                }
-                let dt = moment(value, 'YYYY-MM-DD')
-                if (!dt.isValid()) {
-                    return ''
-                }
-                // 未来日なら表示しない
-                if (moment().diff(value, 'days') < 0) {
-                    return ''
-                }
-
-                let diff_year = moment().diff(value, 'years')
-                return diff_year + '年(' + (diff_year + 1) + '年目)'
-            },
-            deleteEntity(entity) {
-                if (confirm('削除しますか')) {
-                    axios.delete('api/entities/' + entity.id)
-                        .then(result => {
-                            this.getEntities()
-                        })
-                }
-            },
-            deleteAnniv(entity, anniv) {
-                if (confirm('削除しますか')) {
-                    axios.delete('api/entities/' + entity.id + '/days/' + anniv.id)
-                        .then(result => {
-                            this.getEntities()
-                        })
-                }
-            },
         }
+
+        getEntities() {
+            axios.get('api/entities')
+                .then(result => {
+                    this.entities = result.data
+                })
+                .catch(error => {
+                    this.setErrorMessage(error)
+                })
+        }
+
+        getAges(value: string|null) {
+            if ((!value) || value.length != 10) {
+                return ''
+            }
+            let dt = moment(value, 'YYYY-MM-DD')
+            if (!dt.isValid()) {
+                return ''
+            }
+            // 未来日なら表示しない
+            if (moment().diff(value, 'days') < 0) {
+                return ''
+            }
+
+            let diff_year = moment().diff(value, 'years')
+            return diff_year + '年(' + (diff_year + 1) + '年目)'
+        }
+
+        deleteEntity(entity: Entity) {
+            if (confirm('削除しますか')) {
+                axios.delete('api/entities/' + entity.id)
+                    .then(result => {
+                        this.getEntities()
+                    })
+            }
+        }
+
+        deleteAnniv(entity:Entity, anniv: Anniversary) {
+            if (confirm('削除しますか')) {
+                axios.delete('api/entities/' + entity.id + '/days/' + anniv.id)
+                    .then(result => {
+                        this.getEntities()
+                    })
+            }
+        }
+
     }
 </script>
 

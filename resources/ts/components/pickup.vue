@@ -35,14 +35,14 @@
         </template>
       </v-card>
 
-      <v-btn v-show="pickup.length > 0" outline @click="isDesc = !isDesc">説明を<span v-show="isDesc">非</span>表示</v-btn>
+      <v-btn v-show="pickup.length > 0" outlined @click="isDesc = !isDesc">説明を<span v-show="isDesc">非</span>表示</v-btn>
 
 
-      <v-alert v-show="pickup.length === 0" :value="true" outline type="error">
+      <v-alert v-show="pickup.length === 0" :value="true" outlined type="error">
         データが登録されていません。<br>
         グループ、記念日を登録後してから再度、このページをお試しください。
 
-        <v-btn outline :to="{name: 'entities'}">データ登録ページに移動する</v-btn>
+        <v-btn outlined :to="{name: 'entities'}">データ登録ページに移動する</v-btn>
       </v-alert>
 
       <v-dialog v-model="isShowDialog" persistent dark>
@@ -57,59 +57,61 @@
     </v-flex>
   </v-layout>
 </template>
-<script>
-    import mixinJDate from '../util/jdate'
+<script lang="ts">
+    import {Component, Mixins} from 'vue-mixin-decorator'
     import moment from 'moment'
-    import mixinErrorProcess from '../util/ErrorProcess.js'
 
-    export default {
-        name: 'pickup',
-        mixins: [
-            mixinJDate, mixinErrorProcess,
-        ],
-        data() {
-            return {
-                pickup: [],
-                isDesc: false,
-                isShowDialog: true
-            }
-        },
+    import ErrorProcess from "../util/ErrorProcess"
+    import jDate from '../util/jdate'
+
+    interface IMixinInterface extends ErrorProcess, jDate {
+    }
+
+    @Component
+    export default class PickupComponent extends Mixins<IMixinInterface>(ErrorProcess, jDate) {
+
+        pickup = []
+        isDesc = false as boolean
+        isShowDialog = true as boolean
+
         mounted() {
             this.getPickup()
-        },
-        methods: {
-            getPickup() {
-                this.isShowDialog = true
-                axios.get('api/entities/pickup')
-                    .then(result => {
-                        this.pickup = result.data
-                    })
-                    .catch(error => {
-                        this.setErrorMessage(error)
-                    })
-                    .finally(()=> {
-                        setTimeout(() => {
-                            this.isShowDialog = false
-                        }, 500)
-                    })
-            },
-            getAges(value) {
-                if ((!value) || value.length != 10) {
-                    return ''
-                }
-                let dt = moment(value, 'YYYY-MM-DD')
-                if (!dt.isValid()) {
-                    return ''
-                }
-                // 未来日なら表示しない
-                if (moment().diff(value, 'days') < 0) {
-                    return ''
-                }
-
-                let diff_year = moment().diff(value, 'years')
-                return diff_year + '年(' + (diff_year + 1) + '年目)'
-            }
         }
+
+        getPickup() {
+            this.isShowDialog = true
+            return window.axios.get('api/entities/pickup')
+                .then(result => {
+                    this.pickup = result.data
+                })
+                .catch(error => {
+                    this.setErrorMessage(error)
+                    return
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        this.isShowDialog = false
+                    }, 500)
+                })
+        }
+
+        getAges(value: string) {
+            if ((!value) || value.length != 10) {
+                return ''
+            }
+            let dt = moment(value, 'YYYY-MM-DD')
+            if (!dt.isValid()) {
+                return ''
+            }
+            // 未来日なら表示しない
+            if (moment().diff(value, 'days') < 0) {
+                return ''
+            }
+
+            let diff_year = moment().diff(value, 'years')
+            return diff_year + '年(' + (diff_year + 1) + '年目)'
+        }
+
     }
 </script>
 
