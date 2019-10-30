@@ -13,15 +13,15 @@
         <div class="grey lighten-4">
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn outline small color="warning" :to="{name: 'entity-edit', params: {entity_id: entity.id}}">
+            <v-btn outlined small color="warning" :to="{name: 'entity-edit', params: {entity_id: entity.id}}">
               <v-icon>edit</v-icon>
               変更
             </v-btn>
-            <v-btn outline small color="error" @click="deleteEntity(entity)">
+            <v-btn outlined small color="error" @click="deleteEntity(entity)">
               <v-icon>remove_circle_outline</v-icon>
               削除
             </v-btn>
-            <v-btn outline small color="primary"
+            <v-btn outlined small color="primary"
                    :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: 'new'}}">
               <v-icon>add_circle_outline</v-icon>
               記念日追加
@@ -51,13 +51,13 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn
-                small outline
+                small outlined
                 :to="{name: 'anniv-edit', params: {entity_id: entity.id, anniv_id: day.id}}"
                 color="warning">
               <v-icon>edit</v-icon>
               変更
             </v-btn>
-            <v-btn small outline color="error" @click="deleteAnniv(entity, day)">
+            <v-btn small outlined color="error" @click="deleteAnniv(entity, day)">
               <v-icon>remove_circle_outline</v-icon>
               削除
             </v-btn>
@@ -66,7 +66,7 @@
           <v-divider v-if="day_index + 1 < entity.days.length"></v-divider>
         </template>
       </v-card>
-      <v-btn :to="{name: 'entity-edit', params: {entity_id: 'new'}}" outline color="primary">
+      <v-btn :to="{name: 'entity-edit', params: {entity_id: 'new'}}" outlined color="primary">
         <v-icon>add_circle_outline</v-icon>
         グループ追加
       </v-btn>

@@ -35,14 +35,14 @@
         </template>
       </v-card>
 
-      <v-btn v-show="pickup.length > 0" outline @click="isDesc = !isDesc">説明を<span v-show="isDesc">非</span>表示</v-btn>
+      <v-btn v-show="pickup.length > 0" outlined @click="isDesc = !isDesc">説明を<span v-show="isDesc">非</span>表示</v-btn>
 
 
-      <v-alert v-show="pickup.length === 0" :value="true" outline type="error">
+      <v-alert v-show="pickup.length === 0" :value="true" outlined type="error">
         データが登録されていません。<br>
         グループ、記念日を登録後してから再度、このページをお試しください。
 
-        <v-btn outline :to="{name: 'entities'}">データ登録ページに移動する</v-btn>
+        <v-btn outlined :to="{name: 'entities'}">データ登録ページに移動する</v-btn>
       </v-alert>
 
       <v-dialog v-model="isShowDialog" persistent dark>

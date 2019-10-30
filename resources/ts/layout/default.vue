@@ -1,11 +1,12 @@
 <template>
-  <v-app>
-    <v-toolbar flat>
+  <v-app id="inspire">
+    <v-app-bar app>
       <v-toolbar-title>ra</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn flat :to="{name: 'pickup'}">ピックアップ</v-btn>
-        <v-btn flat :to="{name:'entities'}">グループ</v-btn>
+
+        <v-btn text :to="{name:'pickup'}">ピックアップ</v-btn>
+        <v-btn text :to="{name:'entities'}">グループ</v-btn>
+
         <v-menu bottom left>
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on">
@@ -14,14 +15,14 @@
           </template>
 
           <v-list>
-            <v-list-tile href="/logout">
-              <v-list-tile-title>Logout</v-list-tile-title>
-            </v-list-tile>
+            <v-list-item href="/logout">
+              <v-list-item-title>Logout</v-list-item-title>
+            </v-list-item>
           </v-list>
         </v-menu>
 
-      </v-toolbar-items>
-    </v-toolbar>
+
+    </v-app-bar>
 
     <v-divider></v-divider>
 

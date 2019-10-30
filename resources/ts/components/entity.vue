@@ -11,7 +11,7 @@
 
           <div v-if="isErrorMessageTypeForm()">
             <v-alert v-for="(error, error_index) in error_message" :key="error_index" :value="true" type="error"
-                     outline>
+                     outlined>
               <div v-for="e in error">{{e}}</div>
             </v-alert>
           </div>
@@ -28,8 +28,8 @@
                 label="説明"
             ></v-textarea>
 
-            <v-btn outline color="primary" @click="saveEntity">登録</v-btn>
-            <v-btn outline :to="{name:'entities'}">戻る</v-btn>
+            <v-btn outlined color="primary" @click="saveEntity">登録</v-btn>
+            <v-btn outlined :to="{name:'entities'}">戻る</v-btn>
           </v-form>
         </v-card-text>
       </v-card>
@@ -43,12 +43,15 @@
     import '../models'
 
     @Component
-    export default class Entity extends Mixins<mixinErrorProcess>(mixinErrorProcess) {
+    export default class EntityComponent extends Mixins<mixinErrorProcess>(mixinErrorProcess) {
+
         entity_id = null as null | number
-        entity: Entity = new Entity()
+        entity: Entity = {
+            name: '',
+            desc: '',
+        }
 
         mounted() {
-
             if (this.$route.params.entity_id !== 'new') {
                 this.entity_id = parseInt(this.$route.params.entity_id, 10)
                 this.getEntity()
@@ -72,17 +75,23 @@
                 method = 'PUT'
             }
 
-            axios({
-                method: method,
-                url: url,
-                data: this.entity
-            })
-                .then(res => {
-                    this.$router.push({name: 'entities'})
-                })
-                .catch(error => {
-                    this.setErrorMessage(error)
-                })
+            if (method=='POST') {
+                axios.post(url, this.entity)
+                    .then(res => {
+                        this.$router.push({name: 'entities'})
+                    })
+                    .catch(error => {
+                        this.setErrorMessage(error)
+                    })
+            } else {
+                axios.put(url, this.entity)
+                    .then(res => {
+                        this.$router.push({name: 'entities'})
+                    })
+                    .catch(error => {
+                        this.setErrorMessage(error)
+                    })
+            }
         }
     }
 </script>

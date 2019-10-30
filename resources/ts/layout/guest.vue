@@ -1,15 +1,18 @@
 <template>
   <v-app>
-    <v-toolbar flat>
-      <v-toolbar-title>ra</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn flat href="login">Login</v-btn>
-        <v-btn flat href="register">Register</v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+  <v-app-bar app>
+    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <v-toolbar-title>ra</v-toolbar-title>
 
-    <v-divider></v-divider>
+
+      <v-spacer></v-spacer>
+
+    <v-btn text href="login">Login</v-btn>
+    <v-btn text href="register">Register</v-btn>
+
+  </v-app-bar>
+
+
 
     <v-content>
       <v-container grid-list>
@@ -22,5 +25,6 @@
       <v-spacer></v-spacer>
       <div>&copy;{{new Date().getFullYear()}} takemitsu.</div>
     </v-footer>
+
   </v-app>
 </template>

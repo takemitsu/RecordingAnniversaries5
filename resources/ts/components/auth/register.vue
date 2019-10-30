@@ -40,11 +40,11 @@
                 type="password"
             ></v-text-field>
 
-            <v-btn outline type="submit" color="primary">Register</v-btn>
-            <v-btn outline @click="clear">clear</v-btn>
+            <v-btn outlined type="submit" color="primary">Register</v-btn>
+            <v-btn outlined @click="clear">clear</v-btn>
           </v-form>
 
-          <v-alert :value="true" type="warning" outline>
+          <v-alert :value="true" type="warning" outlined class="mt-4">
             パスワード再設定の機能はありません<br>忘れないように注意してください。
           </v-alert>
         </v-card-text>

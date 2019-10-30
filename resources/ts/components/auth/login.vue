@@ -24,10 +24,10 @@
                 type="password"
             ></v-text-field>
 
-            <v-checkbox v-model="remember" label="Remember Me" name="remember" value="1"></v-checkbox>
+            <v-switch v-model="remember" label="Remember Me"></v-switch>
 
-            <v-btn outline type="submit" color="primary">LOGIN</v-btn>
-            <v-btn outline @click="clear">clear</v-btn>
+            <v-btn outlined type="submit" color="primary">LOGIN</v-btn>
+            <v-btn outlined @click="clear">clear</v-btn>
           </v-form>
         </v-card-text>
       </v-card>
