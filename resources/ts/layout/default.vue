@@ -4,8 +4,8 @@
       <v-toolbar-title>ra</v-toolbar-title>
       <v-spacer></v-spacer>
 
-        <v-btn text :to="{name:'pickup'}">ピックアップ</v-btn>
-        <v-btn text :to="{name:'entities'}">グループ</v-btn>
+        <v-btn text :to="{name:'pickup'}">List</v-btn>
+        <v-btn text :to="{name:'entities'}">Edit</v-btn>
 
         <v-menu bottom left>
           <template v-slot:activator="{ on }">
